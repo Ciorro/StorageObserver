@@ -17,8 +17,6 @@ defineVariable(int, _setupActive_AddObserver);
 defineVariable(int, _setupStep_AddObserver);
 defineVariable(int, _resourceId_AddObserver);
 defineVariable(int, _comparisonMode_AddObserver);
-defineVariable(int, _targetLevelInputMinStep_AddObserver);
-defineVariable(int, _targetLevelInputMaxStep_AddObserver);
 defineVariable(float, _targetLevel_AddObserver);
 
 defineVariable(Window, _targetWindow_AddObserver);
@@ -148,18 +146,9 @@ defineFunction(DoAddObserverSetup, void)
             0, 
             GetResourceCapacity(_resourceId_AddObserver, _targetWindow_AddObserver.nRefObjectIndex));
         Input_SetDisplayMode(INPUT_DISPLAY_RANGE_FLOAT);
-
-        _targetLevelInputMinStep_AddObserver = GetResourceCapacity(_resourceId_AddObserver, _targetWindow_AddObserver.nRefObjectIndex) * 0.01;
-        if (_targetLevelInputMinStep_AddObserver < 1.0)
-        {
-            _targetLevelInputMinStep_AddObserver = 1.0;
-        }
-        _targetLevelInputMaxStep_AddObserver = GetResourceCapacity(_resourceId_AddObserver, _targetWindow_AddObserver.nRefObjectIndex) * 0.10;
-        if (_targetLevelInputMaxStep_AddObserver < 1.0)
-        {
-            _targetLevelInputMaxStep_AddObserver = 1.0;
-        }
-        Input_SetStep(_targetLevelInputMinStep_AddObserver, _targetLevelInputMaxStep_AddObserver);
+        Input_SetStep(
+            GetResourceCapacity(_resourceId_AddObserver, _targetWindow_AddObserver.nRefObjectIndex) * 0.01, 
+            GetResourceCapacity(_resourceId_AddObserver, _targetWindow_AddObserver.nRefObjectIndex) * 0.10);
 
         inc(_setupStep_AddObserver);
     }
