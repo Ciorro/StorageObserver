@@ -1,3 +1,8 @@
+defineVariable(int, INPUT_DISPLAY_NONE);
+defineVariable(int, INPUT_DISPLAY_VALUE);
+defineVariable(int, INPUT_DISPLAY_RANGE);
+defineVariable(int, INPUT_DISPLAY_RANGE_FLOAT);
+
 defineVariable(char, _valueUpdated_Input);
 defineVariable(float, _currentValue_Input);
 defineVariable(float, _minValue_Input);
@@ -15,6 +20,11 @@ defineVariable(int, _isPrecise_Input);
 defineFunction(Input_Begin, void, 
     string:label_Input, float:defaultValue_Input, float:minValue_Input, float:maxValue_Input)
 {
+    INPUT_DISPLAY_NONE = 0;
+    INPUT_DISPLAY_VALUE = 1;
+    INPUT_DISPLAY_RANGE = 2;
+    INPUT_DISPLAY_RANGE_FLOAT = 3;
+
     Objectives_CreateNewString("input.value", label_Input);
     Objective_AddRequirement("input.value", 0.0, "");
     Objective_UpdateRequirement("input.value", 0, defaultValue_Input);
@@ -33,9 +43,25 @@ defineFunction(Input_Begin, void,
     return(void);
 }
 
-defineFunction(Input_HideValue, void)
+defineFunction(Input_SetDisplayMode, void, int:mode_SetDisplayMode)
 {
-    Objective_UpdateRequiredValue("input.value", 0, 0.001);
+    if (mode_SetDisplayMode ? INPUT_DISPLAY_NONE)
+    {
+        Objective_UpdateRequiredValue("input.value", 0, 0.001);
+    }
+    elseif (mode_SetDisplayMode ? INPUT_DISPLAY_VALUE)
+    {
+        Objective_UpdateRequiredValue("input.value", 0, 0.0);
+    }
+    elseif (mode_SetDisplayMode ? INPUT_DISPLAY_RANGE)
+    {
+        Objective_UpdateRequiredValue("input.value", 0, maxValue_Input);
+    }
+    elseif (mode_SetDisplayMode ? INPUT_DISPLAY_RANGE_FLOAT)
+    {
+        Objective_UpdateRequiredValue("input.value", 0, -maxValue_Input);
+    }
+
     return(void);
 }
 

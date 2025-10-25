@@ -74,7 +74,7 @@ defineFunction(DoAddObserverSetup, void)
     elseif (_setupStep_AddObserver ? 2)
     {
         Input_Begin("Select the resource you want to monitor [Q/E]:", 0, 0, 49);   
-        Input_HideValue();
+        Input_SetDisplayMode(INPUT_DISPLAY_NONE);
         Objectives_CreateNewString("addobserversetup.resourceid", GetResourceName(Input_GetCurrentValue()));
 
         inc(_setupStep_AddObserver);
@@ -110,7 +110,7 @@ defineFunction(DoAddObserverSetup, void)
     elseif (_setupStep_AddObserver ? 4)
     {
         Input_Begin("Notify when [Q/E]:", 0, 0, 1);
-        Input_HideValue();
+        Input_SetDisplayMode(INPUT_DISPLAY_NONE);
         Objectives_CreateNewString("addobserversetup.comparisonmode", "Less"); 
 
         inc(_setupStep_AddObserver);
@@ -147,6 +147,7 @@ defineFunction(DoAddObserverSetup, void)
             GetResourceCapacity(_resourceId_AddObserver, _targetWindow_AddObserver.nRefObjectIndex) * 0.5, 
             0, 
             GetResourceCapacity(_resourceId_AddObserver, _targetWindow_AddObserver.nRefObjectIndex));
+        Input_SetDisplayMode(INPUT_DISPLAY_RANGE_FLOAT);
 
         _targetLevelInputMinStep_AddObserver = GetResourceCapacity(_resourceId_AddObserver, _targetWindow_AddObserver.nRefObjectIndex) * 0.01;
         if (_targetLevelInputMinStep_AddObserver < 1.0)
