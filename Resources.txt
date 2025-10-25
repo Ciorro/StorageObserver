@@ -1,0 +1,420 @@
+///////////////////////
+// GET RESOURCE NAME //
+///////////////////////
+
+defineFunction(GetResourceName, string, int:resourceId_GetResourceName)
+{
+    if (resourceId_GetResourceName ? 0) { return("Alcohol"); }
+    elseif (resourceId_GetResourceName ? 1) { return("Alumina"); }
+    elseif (resourceId_GetResourceName ? 2) { return("Aluminium"); }
+    elseif (resourceId_GetResourceName ? 3) { return("Asphalt"); }
+    elseif (resourceId_GetResourceName ? 4) { return("Bauxite"); }
+    elseif (resourceId_GetResourceName ? 5) { return("Bitumen"); }
+    elseif (resourceId_GetResourceName ? 6) { return("Boards"); }
+    elseif (resourceId_GetResourceName ? 7) { return("Bricks"); }
+    elseif (resourceId_GetResourceName ? 8) { return("Cement"); }
+    elseif (resourceId_GetResourceName ? 9) { return("Chemicals"); }
+    elseif (resourceId_GetResourceName ? 10) { return("Clothes"); }
+    elseif (resourceId_GetResourceName ? 11) { return("Coal"); }
+    elseif (resourceId_GetResourceName ? 12) { return("Concrete"); }
+    elseif (resourceId_GetResourceName ? 13) { return("Electrical Components"); }
+    elseif (resourceId_GetResourceName ? 14) { return("Electronics"); }
+    elseif (resourceId_GetResourceName ? 15) { return("Explosives"); }
+    elseif (resourceId_GetResourceName ? 16) { return("Fabric"); }
+    elseif (resourceId_GetResourceName ? 17) { return("Fertiliser"); }
+    elseif (resourceId_GetResourceName ? 18) { return("Fertiliser Liquid"); }
+    elseif (resourceId_GetResourceName ? 19) { return("Food"); }
+    elseif (resourceId_GetResourceName ? 20) { return("Fuel"); }
+    elseif (resourceId_GetResourceName ? 21) { return("Gravel"); }
+    elseif (resourceId_GetResourceName ? 22) { return("Iron"); }
+    elseif (resourceId_GetResourceName ? 23) { return("Livestock"); }
+    elseif (resourceId_GetResourceName ? 24) { return("Meat"); }
+    elseif (resourceId_GetResourceName ? 25) { return("Mechanical Components"); }
+    elseif (resourceId_GetResourceName ? 26) { return("Oil"); }
+    elseif (resourceId_GetResourceName ? 27) { return("Plants"); }
+    elseif (resourceId_GetResourceName ? 28) { return("Plastics"); }
+    elseif (resourceId_GetResourceName ? 29) { return("Prefab Panels"); }
+    elseif (resourceId_GetResourceName ? 30) { return("Raw Bauxite"); }
+    elseif (resourceId_GetResourceName ? 31) { return("Raw Coal"); }
+    elseif (resourceId_GetResourceName ? 32) { return("Raw Gravel"); }
+    elseif (resourceId_GetResourceName ? 33) { return("Raw Iron"); }
+    elseif (resourceId_GetResourceName ? 34) { return("Steel"); }
+    elseif (resourceId_GetResourceName ? 35) { return("Uranium"); }
+    elseif (resourceId_GetResourceName ? 36) { return("Uranium Oxide"); }
+    elseif (resourceId_GetResourceName ? 37) { return("Usage Water"); }
+    elseif (resourceId_GetResourceName ? 38) { return("Waste Aluminium"); }
+    elseif (resourceId_GetResourceName ? 39) { return("Waste Ash"); }
+    elseif (resourceId_GetResourceName ? 40) { return("Waste Bio"); }
+    elseif (resourceId_GetResourceName ? 41) { return("Waste Burnable"); }
+    elseif (resourceId_GetResourceName ? 42) { return("Waste Gravel"); }
+    elseif (resourceId_GetResourceName ? 43) { return("Waste Mixed"); }
+    elseif (resourceId_GetResourceName ? 44) { return("Waste Other"); }
+    elseif (resourceId_GetResourceName ? 45) { return("Waste Plastic"); }
+    elseif (resourceId_GetResourceName ? 46) { return("Waste Steel"); }
+    elseif (resourceId_GetResourceName ? 47) { return("Waste Toxic"); }
+    elseif (resourceId_GetResourceName ? 48) { return("Water"); }
+    elseif (resourceId_GetResourceName ? 49) { return("Wood"); }
+    return("Unknown");
+}
+
+////////////////////////////////////
+// GET RESOURCE NOTIFICATION TEXT //
+////////////////////////////////////
+
+defineFunction(GetResourceNotificationText, string, int:resourceId_GetResourceNotificationText, int:comparisonMode_GetResourceNotificationText)
+{
+    if (comparisonMode_GetResourceNotificationText ? 0)
+    {
+        if (resourceId_GetResourceNotificationText ? 0) { return("The alcohol level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 1) { return("The alumina level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 2) { return("The aluminium level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 3) { return("The asphalt level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 4) { return("The bauxite level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 5) { return("The bitumen level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 6) { return("The boards level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 7) { return("The bricks level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 8) { return("The cement level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 9) { return("The chemicals level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 10) { return("The clothes level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 11) { return("The coal level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 12) { return("The concrete level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 13) { return("The electrical components level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 14) { return("The electronics level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 15) { return("The explosives level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 16) { return("The fabric level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 17) { return("The fertiliser level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 18) { return("The fertiliser liquid level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 19) { return("The food level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 20) { return("The fuel level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 21) { return("The gravel level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 22) { return("The iron level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 23) { return("The livestock level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 24) { return("The meat level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 25) { return("The mechanical components level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 26) { return("The oil level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 27) { return("The plants level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 28) { return("The plastics level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 29) { return("The prefab panels level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 30) { return("The raw bauxite level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 31) { return("The raw coal level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 32) { return("The raw gravel level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 33) { return("The raw iron level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 34) { return("The steel level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 35) { return("The uranium level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 36) { return("The uranium oxide level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 37) { return("The usage water level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 38) { return("The waste aluminium level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 39) { return("The waste ash level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 40) { return("The waste bio level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 41) { return("The waste burnable level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 42) { return("The waste gravel level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 43) { return("The waste mixed level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 44) { return("The waste other level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 45) { return("The waste plastic level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 46) { return("The waste steel level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 47) { return("The waste toxic level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 48) { return("The water level in this storage is too low."); }
+        elseif (resourceId_GetResourceNotificationText ? 49) { return("The wood level in this storage is too low."); }
+    }
+    else()
+    {
+        if (resourceId_GetResourceNotificationText ? 0) { return("The alcohol level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 1) { return("The alumina level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 2) { return("The aluminium level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 3) { return("The asphalt level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 4) { return("The bauxite level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 5) { return("The bitumen level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 6) { return("The boards level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 7) { return("The bricks level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 8) { return("The cement level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 9) { return("The chemicals level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 10) { return("The clothes level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 11) { return("The coal level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 12) { return("The concrete level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 13) { return("The electrical components level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 14) { return("The electronics level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 15) { return("The explosives level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 16) { return("The fabric level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 17) { return("The fertiliser level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 18) { return("The fertiliser liquid level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 19) { return("The food level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 20) { return("The fuel level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 21) { return("The gravel level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 22) { return("The iron level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 23) { return("The livestock level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 24) { return("The meat level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 25) { return("The mechanical components level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 26) { return("The oil level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 27) { return("The plants level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 28) { return("The plastics level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 29) { return("The prefab panels level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 30) { return("The raw bauxite level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 31) { return("The raw coal level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 32) { return("The raw gravel level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 33) { return("The raw iron level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 34) { return("The steel level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 35) { return("The uranium level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 36) { return("The uranium oxide level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 37) { return("The usage water level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 38) { return("The waste aluminium level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 39) { return("The waste ash level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 40) { return("The waste bio level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 41) { return("The waste burnable level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 42) { return("The waste gravel level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 43) { return("The waste mixed level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 44) { return("The waste other level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 45) { return("The waste plastic level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 46) { return("The waste steel level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 47) { return("The waste toxic level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 48) { return("The water level in this storage is too high."); }
+        elseif (resourceId_GetResourceNotificationText ? 49) { return("The wood level in this storage is too high."); }
+    }
+
+    return("?");
+}
+
+/////////////////////////////////////
+// GET RESOURCE NOTIFICATION IMAGE //
+/////////////////////////////////////
+
+defineFunction(GetResourceNotificationImage, string, int:resourceId_GetResourceNotificationImage, int:comparisonMode_GetResourceNotificationImage)
+{
+    if (comparisonMode_GetResourceNotificationImage ? 0)
+    {
+        if (resourceId_GetResourceNotificationImage ? 0) { return("Img/Notifications/Alcohol_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 1) { return("Img/Notifications/Alumina_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 2) { return("Img/Notifications/Aluminium_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 3) { return("Img/Notifications/Asphalt_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 4) { return("Img/Notifications/Bauxite_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 5) { return("Img/Notifications/Bitumen_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 6) { return("Img/Notifications/Boards_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 7) { return("Img/Notifications/Bricks_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 8) { return("Img/Notifications/Cement_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 9) { return("Img/Notifications/Chemicals_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 10) { return("Img/Notifications/Clothes_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 11) { return("Img/Notifications/Coal_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 12) { return("Img/Notifications/Concrete_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 13) { return("Img/Notifications/ElectricalComponents_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 14) { return("Img/Notifications/Electronics_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 15) { return("Img/Notifications/Explosives_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 16) { return("Img/Notifications/Fabric_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 17) { return("Img/Notifications/Fertiliser_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 18) { return("Img/Notifications/FertiliserLiquid_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 19) { return("Img/Notifications/Food_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 20) { return("Img/Notifications/Fuel_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 21) { return("Img/Notifications/Gravel_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 22) { return("Img/Notifications/Iron_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 23) { return("Img/Notifications/Livestock_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 24) { return("Img/Notifications/Meat_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 25) { return("Img/Notifications/MechanicalComponents_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 26) { return("Img/Notifications/Oil_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 27) { return("Img/Notifications/Plants_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 28) { return("Img/Notifications/Plastics_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 29) { return("Img/Notifications/PrefabPanels_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 30) { return("Img/Notifications/RawBauxite_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 31) { return("Img/Notifications/RawCoal_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 32) { return("Img/Notifications/RawGravel_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 33) { return("Img/Notifications/RawIron_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 34) { return("Img/Notifications/Steel_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 35) { return("Img/Notifications/Uranium_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 36) { return("Img/Notifications/UraniumOxide_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 37) { return("Img/Notifications/UsageWater_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 38) { return("Img/Notifications/WasteAluminium_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 39) { return("Img/Notifications/WasteAsh_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 40) { return("Img/Notifications/WasteBio_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 41) { return("Img/Notifications/WasteBurnable_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 42) { return("Img/Notifications/WasteGravel_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 43) { return("Img/Notifications/WasteMixed_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 44) { return("Img/Notifications/WasteOther_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 45) { return("Img/Notifications/WastePlastic_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 46) { return("Img/Notifications/WasteSteel_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 47) { return("Img/Notifications/WasteToxic_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 48) { return("Img/Notifications/Water_Min.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 49) { return("Img/Notifications/Wood_Min.png"); }
+    }
+    else()
+    {
+        if (resourceId_GetResourceNotificationImage ? 0) { return("Img/Notifications/Alcohol_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 1) { return("Img/Notifications/Alumina_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 2) { return("Img/Notifications/Aluminium_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 3) { return("Img/Notifications/Asphalt_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 4) { return("Img/Notifications/Bauxite_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 5) { return("Img/Notifications/Bitumen_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 6) { return("Img/Notifications/Boards_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 7) { return("Img/Notifications/Bricks_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 8) { return("Img/Notifications/Cement_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 9) { return("Img/Notifications/Chemicals_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 10) { return("Img/Notifications/Clothes_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 11) { return("Img/Notifications/Coal_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 12) { return("Img/Notifications/Concrete_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 13) { return("Img/Notifications/ElectricalComponents_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 14) { return("Img/Notifications/Electronics_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 15) { return("Img/Notifications/Explosives_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 16) { return("Img/Notifications/Fabric_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 17) { return("Img/Notifications/Fertiliser_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 18) { return("Img/Notifications/FertiliserLiquid_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 19) { return("Img/Notifications/Food_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 20) { return("Img/Notifications/Fuel_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 21) { return("Img/Notifications/Gravel_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 22) { return("Img/Notifications/Iron_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 23) { return("Img/Notifications/Livestock_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 24) { return("Img/Notifications/Meat_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 25) { return("Img/Notifications/MechanicalComponents_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 26) { return("Img/Notifications/Oil_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 27) { return("Img/Notifications/Plants_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 28) { return("Img/Notifications/Plastics_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 29) { return("Img/Notifications/PrefabPanels_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 30) { return("Img/Notifications/RawBauxite_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 31) { return("Img/Notifications/RawCoal_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 32) { return("Img/Notifications/RawGravel_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 33) { return("Img/Notifications/RawIron_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 34) { return("Img/Notifications/Steel_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 35) { return("Img/Notifications/Uranium_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 36) { return("Img/Notifications/UraniumOxide_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 37) { return("Img/Notifications/UsageWater_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 38) { return("Img/Notifications/WasteAluminium_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 39) { return("Img/Notifications/WasteAsh_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 40) { return("Img/Notifications/WasteBio_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 41) { return("Img/Notifications/WasteBurnable_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 42) { return("Img/Notifications/WasteGravel_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 43) { return("Img/Notifications/WasteMixed_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 44) { return("Img/Notifications/WasteOther_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 45) { return("Img/Notifications/WastePlastic_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 46) { return("Img/Notifications/WasteSteel_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 47) { return("Img/Notifications/WasteToxic_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 48) { return("Img/Notifications/Water_Max.png"); }
+        elseif (resourceId_GetResourceNotificationImage ? 49) { return("Img/Notifications/Wood_Max.png"); }
+    }
+
+    return("Img/Error.png");
+}
+
+////////////////////////
+// GET RESOURCE LEVEL //
+////////////////////////
+
+defineVariable(Resources, _amount_GetResourceLevel);
+
+defineFunction(GetResourceLevel, float, int:resourceId_GetResourceLevel, int:buildingId_GetResourceLevel)
+{
+    _amount_GetResourceLevel.ResetAmounts();
+    _amount_GetResourceLevel.GetFromBuilding(buildingId_GetResourceLevel);
+
+    if (resourceId_GetResourceLevel ? 0) { return(_amount_GetResourceLevel.alcohol); }
+    elseif (resourceId_GetResourceLevel ? 1) { return(_amount_GetResourceLevel.alumina); }
+    elseif (resourceId_GetResourceLevel ? 2) { return(_amount_GetResourceLevel.aluminium); }
+    elseif (resourceId_GetResourceLevel ? 3) { return(_amount_GetResourceLevel.asphalt); }
+    elseif (resourceId_GetResourceLevel ? 4) { return(_amount_GetResourceLevel.bauxite); }
+    elseif (resourceId_GetResourceLevel ? 5) { return(_amount_GetResourceLevel.bitumen); }
+    elseif (resourceId_GetResourceLevel ? 6) { return(_amount_GetResourceLevel.boards); }
+    elseif (resourceId_GetResourceLevel ? 7) { return(_amount_GetResourceLevel.bricks); }
+    elseif (resourceId_GetResourceLevel ? 8) { return(_amount_GetResourceLevel.cement); }
+    elseif (resourceId_GetResourceLevel ? 9) { return(_amount_GetResourceLevel.chemicals); }
+    elseif (resourceId_GetResourceLevel ? 10) { return(_amount_GetResourceLevel.clothes); }
+    elseif (resourceId_GetResourceLevel ? 11) { return(_amount_GetResourceLevel.coal); }
+    elseif (resourceId_GetResourceLevel ? 12) { return(_amount_GetResourceLevel.concrete); }
+    elseif (resourceId_GetResourceLevel ? 13) { return(_amount_GetResourceLevel.ecomponents); }
+    elseif (resourceId_GetResourceLevel ? 14) { return(_amount_GetResourceLevel.eletronics); }
+    elseif (resourceId_GetResourceLevel ? 15) { return(_amount_GetResourceLevel.explosives); }
+    elseif (resourceId_GetResourceLevel ? 16) { return(_amount_GetResourceLevel.fabric); }
+    elseif (resourceId_GetResourceLevel ? 17) { return(_amount_GetResourceLevel.fertiliser); }
+    elseif (resourceId_GetResourceLevel ? 18) { return(_amount_GetResourceLevel.fertiliser_liquid); }
+    elseif (resourceId_GetResourceLevel ? 19) { return(_amount_GetResourceLevel.food); }
+    elseif (resourceId_GetResourceLevel ? 20) { return(_amount_GetResourceLevel.fuel); }
+    elseif (resourceId_GetResourceLevel ? 21) { return(_amount_GetResourceLevel.gravel); }
+    elseif (resourceId_GetResourceLevel ? 22) { return(_amount_GetResourceLevel.iron); }
+    elseif (resourceId_GetResourceLevel ? 23) { return(_amount_GetResourceLevel.livestock); }
+    elseif (resourceId_GetResourceLevel ? 24) { return(_amount_GetResourceLevel.meat); }
+    elseif (resourceId_GetResourceLevel ? 25) { return(_amount_GetResourceLevel.mcomponents); }
+    elseif (resourceId_GetResourceLevel ? 26) { return(_amount_GetResourceLevel.oil); }
+    elseif (resourceId_GetResourceLevel ? 27) { return(_amount_GetResourceLevel.plants); }
+    elseif (resourceId_GetResourceLevel ? 28) { return(_amount_GetResourceLevel.plastics); }
+    elseif (resourceId_GetResourceLevel ? 29) { return(_amount_GetResourceLevel.prefabpanels); }
+    elseif (resourceId_GetResourceLevel ? 30) { return(_amount_GetResourceLevel.rawbauxite); }
+    elseif (resourceId_GetResourceLevel ? 31) { return(_amount_GetResourceLevel.rawcoal); }
+    elseif (resourceId_GetResourceLevel ? 32) { return(_amount_GetResourceLevel.rawgravel); }
+    elseif (resourceId_GetResourceLevel ? 33) { return(_amount_GetResourceLevel.rawiron); }
+    elseif (resourceId_GetResourceLevel ? 34) { return(_amount_GetResourceLevel.steel); }
+    elseif (resourceId_GetResourceLevel ? 35) { return(_amount_GetResourceLevel.uranium); }
+    elseif (resourceId_GetResourceLevel ? 36) { return(_amount_GetResourceLevel.yellowcake); }
+    elseif (resourceId_GetResourceLevel ? 37) { return(_amount_GetResourceLevel.usagewater); }
+    elseif (resourceId_GetResourceLevel ? 38) { return(_amount_GetResourceLevel.waste_aluminium); }
+    elseif (resourceId_GetResourceLevel ? 39) { return(_amount_GetResourceLevel.waste_ash); }
+    elseif (resourceId_GetResourceLevel ? 40) { return(_amount_GetResourceLevel.waste_bio); }
+    elseif (resourceId_GetResourceLevel ? 41) { return(_amount_GetResourceLevel.waste_burnable); }
+    elseif (resourceId_GetResourceLevel ? 42) { return(_amount_GetResourceLevel.waste_gravel); }
+    elseif (resourceId_GetResourceLevel ? 43) { return(_amount_GetResourceLevel.waste_mixed); }
+    elseif (resourceId_GetResourceLevel ? 44) { return(_amount_GetResourceLevel.waste_other); }
+    elseif (resourceId_GetResourceLevel ? 45) { return(_amount_GetResourceLevel.waste_plastic); }
+    elseif (resourceId_GetResourceLevel ? 46) { return(_amount_GetResourceLevel.waste_steel); }
+    elseif (resourceId_GetResourceLevel ? 47) { return(_amount_GetResourceLevel.waste_toxic); }
+    elseif (resourceId_GetResourceLevel ? 48) { return(_amount_GetResourceLevel.water); }
+    elseif (resourceId_GetResourceLevel ? 49) { return(_amount_GetResourceLevel.wood); }
+
+    return(0.0);
+}
+
+///////////////////////////
+// GET RESOURCE CAPACITY //
+///////////////////////////
+
+defineVariable(Resources, _capacity_GetResourceCapacity);
+
+defineFunction(GetResourceCapacity, int, int:resourceId_GetResourceCapacity, int:buildingId_GetResourceCapacity)
+{
+    _capacity_GetResourceCapacity.ResetAmounts();
+    _capacity_GetResourceCapacity.GetCapacityFromBuilding(buildingId_GetResourceCapacity);
+
+    if (resourceId_GetResourceCapacity ? 0) { return(_capacity_GetResourceCapacity.alcohol); }
+    elseif (resourceId_GetResourceCapacity ? 1) { return(_capacity_GetResourceCapacity.alumina); }
+    elseif (resourceId_GetResourceCapacity ? 2) { return(_capacity_GetResourceCapacity.aluminium); }
+    elseif (resourceId_GetResourceCapacity ? 3) { return(_capacity_GetResourceCapacity.asphalt); }
+    elseif (resourceId_GetResourceCapacity ? 4) { return(_capacity_GetResourceCapacity.bauxite); }
+    elseif (resourceId_GetResourceCapacity ? 5) { return(_capacity_GetResourceCapacity.bitumen); }
+    elseif (resourceId_GetResourceCapacity ? 6) { return(_capacity_GetResourceCapacity.boards); }
+    elseif (resourceId_GetResourceCapacity ? 7) { return(_capacity_GetResourceCapacity.bricks); }
+    elseif (resourceId_GetResourceCapacity ? 8) { return(_capacity_GetResourceCapacity.cement); }
+    elseif (resourceId_GetResourceCapacity ? 9) { return(_capacity_GetResourceCapacity.chemicals); }
+    elseif (resourceId_GetResourceCapacity ? 10) { return(_capacity_GetResourceCapacity.clothes); }
+    elseif (resourceId_GetResourceCapacity ? 11) { return(_capacity_GetResourceCapacity.coal); }
+    elseif (resourceId_GetResourceCapacity ? 12) { return(_capacity_GetResourceCapacity.concrete); }
+    elseif (resourceId_GetResourceCapacity ? 13) { return(_capacity_GetResourceCapacity.ecomponents); }
+    elseif (resourceId_GetResourceCapacity ? 14) { return(_capacity_GetResourceCapacity.eletronics); }
+    elseif (resourceId_GetResourceCapacity ? 15) { return(_capacity_GetResourceCapacity.explosives); }
+    elseif (resourceId_GetResourceCapacity ? 16) { return(_capacity_GetResourceCapacity.fabric); }
+    elseif (resourceId_GetResourceCapacity ? 17) { return(_capacity_GetResourceCapacity.fertiliser); }
+    elseif (resourceId_GetResourceCapacity ? 18) { return(_capacity_GetResourceCapacity.fertiliser_liquid); }
+    elseif (resourceId_GetResourceCapacity ? 19) { return(_capacity_GetResourceCapacity.food); }
+    elseif (resourceId_GetResourceCapacity ? 20) { return(_capacity_GetResourceCapacity.fuel); }
+    elseif (resourceId_GetResourceCapacity ? 21) { return(_capacity_GetResourceCapacity.gravel); }
+    elseif (resourceId_GetResourceCapacity ? 22) { return(_capacity_GetResourceCapacity.iron); }
+    elseif (resourceId_GetResourceCapacity ? 23) { return(_capacity_GetResourceCapacity.livestock); }
+    elseif (resourceId_GetResourceCapacity ? 24) { return(_capacity_GetResourceCapacity.meat); }
+    elseif (resourceId_GetResourceCapacity ? 25) { return(_capacity_GetResourceCapacity.mcomponents); }
+    elseif (resourceId_GetResourceCapacity ? 26) { return(_capacity_GetResourceCapacity.oil); }
+    elseif (resourceId_GetResourceCapacity ? 27) { return(_capacity_GetResourceCapacity.plants); }
+    elseif (resourceId_GetResourceCapacity ? 28) { return(_capacity_GetResourceCapacity.plastics); }
+    elseif (resourceId_GetResourceCapacity ? 29) { return(_capacity_GetResourceCapacity.prefabpanels); }
+    elseif (resourceId_GetResourceCapacity ? 30) { return(_capacity_GetResourceCapacity.rawbauxite); }
+    elseif (resourceId_GetResourceCapacity ? 31) { return(_capacity_GetResourceCapacity.rawcoal); }
+    elseif (resourceId_GetResourceCapacity ? 32) { return(_capacity_GetResourceCapacity.rawgravel); }
+    elseif (resourceId_GetResourceCapacity ? 33) { return(_capacity_GetResourceCapacity.rawiron); }
+    elseif (resourceId_GetResourceCapacity ? 34) { return(_capacity_GetResourceCapacity.steel); }
+    elseif (resourceId_GetResourceCapacity ? 35) { return(_capacity_GetResourceCapacity.uranium); }
+    elseif (resourceId_GetResourceCapacity ? 36) { return(_capacity_GetResourceCapacity.yellowcake); }
+    elseif (resourceId_GetResourceCapacity ? 37) { return(_capacity_GetResourceCapacity.usagewater); }
+    elseif (resourceId_GetResourceCapacity ? 38) { return(_capacity_GetResourceCapacity.waste_aluminium); }
+    elseif (resourceId_GetResourceCapacity ? 39) { return(_capacity_GetResourceCapacity.waste_ash); }
+    elseif (resourceId_GetResourceCapacity ? 40) { return(_capacity_GetResourceCapacity.waste_bio); }
+    elseif (resourceId_GetResourceCapacity ? 41) { return(_capacity_GetResourceCapacity.waste_burnable); }
+    elseif (resourceId_GetResourceCapacity ? 42) { return(_capacity_GetResourceCapacity.waste_gravel); }
+    elseif (resourceId_GetResourceCapacity ? 43) { return(_capacity_GetResourceCapacity.waste_mixed); }
+    elseif (resourceId_GetResourceCapacity ? 44) { return(_capacity_GetResourceCapacity.waste_other); }
+    elseif (resourceId_GetResourceCapacity ? 45) { return(_capacity_GetResourceCapacity.waste_plastic); }
+    elseif (resourceId_GetResourceCapacity ? 46) { return(_capacity_GetResourceCapacity.waste_steel); }
+    elseif (resourceId_GetResourceCapacity ? 47) { return(_capacity_GetResourceCapacity.waste_toxic); }
+    elseif (resourceId_GetResourceCapacity ? 48) { return(_capacity_GetResourceCapacity.water); }
+    elseif (resourceId_GetResourceCapacity ? 49) { return(_capacity_GetResourceCapacity.wood); }
+
+    return(0.0);
+}

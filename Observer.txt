@@ -1,0 +1,180 @@
+defineStruct(Observer, 25230)
+{
+    defineStructVariable(Observer, int, TargetBuildingId);
+    defineStructVariable(Observer, vec3, TargetPosition);
+    defineStructVariable(Observer, int, ComparisonMode);
+    defineStructVariable(Observer, int, ResourceId);
+    defineStructVariable(Observer, float, CurrLevel);
+    defineStructVariable(Observer, float, PrevLevel);
+    defineStructVariable(Observer, float, TargetLevel);
+    defineStructVariable(Observer, float, LastUpdated);
+}
+
+defineArray(Observer[1000], Observers);
+defineVariable(int, ObserverCount);
+
+/////////////////////
+// GET OBSERVER ID //
+/////////////////////
+
+defineVariable(int, _iter_GetObserverId);
+
+defineFunction(GetObserverId, int, vec3:position_GetObserverId, int:startIndex_GetObserverId)
+{
+    if (startIndex_GetObserverId < 0)
+    {
+        startIndex_GetObserverId = 0;
+    }
+
+    _iter_GetObserverId = startIndex_GetObserverId;
+    while (_iter_GetObserverId < ObserverCount)
+    {
+        if (Observers[_iter_GetObserverId].TargetPosition.x ? position_GetObserverId.x &
+            Observers[_iter_GetObserverId].TargetPosition.y ? position_GetObserverId.y &
+            Observers[_iter_GetObserverId].TargetPosition.z ? position_GetObserverId.z)
+        {
+            return(_iter_GetObserverId);
+        }
+
+        inc(_iter_GetObserverId);
+    }
+
+    return(-1);
+}
+
+//////////////////
+// ADD OBSERVER //
+//////////////////
+
+defineFunction(AddObserver, void, Observer:observer_AddObserver)
+{
+    if (ObserverCount > 999)
+    {
+        Out_AppendStr("Observers limit reached.");
+        Out_ShowErrorAndWait();
+        return(void);
+    }
+
+    Observers[ObserverCount] = observer_AddObserver;
+    inc(ObserverCount);
+    return(void);
+}
+
+/////////////////////
+// REMOVE OBSERVER //
+/////////////////////
+
+defineFunction(RemoveObserver, void, int:observerId_RemoveObserver)
+{
+    if (observerId_RemoveObserver < 0)
+    {
+        return(void);
+    }
+
+    dec(ObserverCount);
+
+    while (observerId_RemoveObserver < ObserverCount)
+    {
+        Observers[observerId_RemoveObserver] = Observers[observerId_RemoveObserver + 1];
+        inc(observerId_RemoveObserver);
+    }
+
+    return(void);
+}
+
+/////////////////////////
+// UPDATE BUILDING IDS //
+/////////////////////////
+
+defineVariable(int, _iter_UpdateObserversBuildingId);
+
+defineFunction(UpdateObserversBuildingId, void)
+{
+    Script_SetUpdateFrequency(40000);
+
+    _iter_UpdateObserversBuildingId = 0;
+    while (_iter_UpdateObserversBuildingId < ObserverCount)
+    {
+        Observers[_iter_UpdateObserversBuildingId].TargetBuildingId = 
+            FindBuildingIdByPosition(Observers[_iter_UpdateObserversBuildingId].TargetPosition);
+        inc(_iter_UpdateObserversBuildingId);
+    }
+
+    Script_SetUpdateFrequency(5000);
+    return(void);
+}
+
+//////////////////////
+// UPDATE OBSERVERS //
+//////////////////////
+
+defineVariable(Observer, _observer_UpdateObservers);
+defineVariable(float, _currentTime_UpdateObservers);
+defineVariable(float, _timeDiff_UpdateObservers);
+defineVariable(int, _targetBuildingId_UpdateObservers);
+defineVariable(int, _iter_UpdateObservers);
+defineVariable(vec3, _position_UpdateObservers);
+
+defineFunction(UpdateObservers, void)
+{
+    Script_GetGameTime(_currentTime_UpdateObservers);
+
+    _iter_UpdateObservers = 0;
+    while (_iter_UpdateObservers < ObserverCount)
+    {
+        _observer_UpdateObservers = Observers[_iter_UpdateObservers];
+        _timeDiff_UpdateObservers = Math_AbsF(
+            _currentTime_UpdateObservers - _observer_UpdateObservers.LastUpdated);
+
+        if (_timeDiff_UpdateObservers > 10.0)
+        {
+            _targetBuildingId_UpdateObservers = _observer_UpdateObservers.TargetBuildingId;
+
+            if (_targetBuildingId_UpdateObservers ? -1)
+            {
+                RemoveObserver(_iter_UpdateObservers);
+                dec(_iter_UpdateObservers);
+            }
+            else()
+            {
+                _observer_UpdateObservers.CurrLevel = GetResourceLevel(
+                    _observer_UpdateObservers.ResourceId, _targetBuildingId_UpdateObservers);
+                _observer_UpdateObservers.LastUpdated = _currentTime_UpdateObservers;
+
+                if (_observer_UpdateObservers.ComparisonMode ? 0)
+                {
+                    if (_observer_UpdateObservers.CurrLevel < _observer_UpdateObservers.TargetLevel &
+                        _observer_UpdateObservers.PrevLevel > _observer_UpdateObservers.TargetLevel)
+                    {
+                        _position_UpdateObservers = _observer_UpdateObservers.TargetPosition;
+                        Notification_CreateNewStringPic(
+                            "Not enough resource", 
+                            GetResourceNotificationText(_observer_UpdateObservers.ResourceId, 0), 
+                            GetResourceNotificationImage(_observer_UpdateObservers.ResourceId, 0), 
+                            _position_UpdateObservers);
+                    }
+                }
+                else()
+                {
+                    if (_observer_UpdateObservers.CurrLevel > _observer_UpdateObservers.TargetLevel &
+                        _observer_UpdateObservers.PrevLevel < _observer_UpdateObservers.TargetLevel)
+                    {
+                        _position_UpdateObservers = _observer_UpdateObservers.TargetPosition;
+                        Notification_CreateNewStringPic(
+                            "Resource limit exceeded", 
+                            GetResourceNotificationText(_observer_UpdateObservers.ResourceId, 1), 
+                            GetResourceNotificationImage(_observer_UpdateObservers.ResourceId, 1), 
+                            _position_UpdateObservers);
+                    }
+                }
+
+                _observer_UpdateObservers.PrevLevel = _observer_UpdateObservers.CurrLevel;
+                Observers[_iter_UpdateObservers] = _observer_UpdateObservers;
+            }
+        }
+
+        inc(_iter_UpdateObservers);  
+    }
+
+    return(void);
+}

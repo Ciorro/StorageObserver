@@ -1,0 +1,21 @@
+defineFunction(Math_AbsI, int, int:in_Math_AbsI)
+{
+    if (in_Math_AbsI < 0)
+    {
+        in_Math_AbsI = -in_Math_AbsI;
+        return(in_Math_AbsI);
+    }
+
+    return(in_Math_AbsI);
+}
+
+defineFunction(Math_AbsF, float, float:in_Math_AbsF)
+{
+    if (in_Math_AbsF < 0)
+    {
+        in_Math_AbsF = -in_Math_AbsF;
+        return(in_Math_AbsF);
+    }
+
+    return(in_Math_AbsF);
+}

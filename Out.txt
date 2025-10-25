@@ -1,0 +1,150 @@
+defineVariable(float, _out_fTmp);
+defineVariable(int, _out_MsgExists);
+defineArray(char[1000], _out_Message);
+defineVariable(char, _out_LineFeed);
+
+defineFunction(Out_Init, void)
+{
+    _out_LineFeed = 10;
+    return(void);
+}
+
+defineFunction(Out_Clear, void)
+{
+    _out_Message[0] = 0;
+    return(void);
+}
+
+defineFunction(Out_AppendInt, void, int:value_AppendInt)
+{
+    strcat(_out_Message, value_AppendInt);
+    return(void);
+}
+
+defineFunction(Out_AppendLineInt, void, int:value_AppendLineInt)
+{
+    strcat(_out_Message, value_AppendLineInt);
+    strcat(_out_Message, _out_LineFeed);
+    return(void);
+}
+
+defineFunction(Out_AppendFloat, void, float:value_AppendFloat)
+{
+    strcat(_out_Message, value_AppendFloat);
+    return(void);
+}
+
+defineFunction(Out_AppendLineFloat, void, float:value_AppendLineFloat)
+{
+    strcat(_out_Message, value_AppendLineFloat);
+    strcat(_out_Message, _out_LineFeed);
+    return(void);
+}
+
+defineFunction(Out_AppendChar, void, char:value_AppendChar)
+{
+    strcat(_out_Message, value_AppendChar);
+    return(void);
+}
+
+defineFunction(Out_AppendLineChar, void, char:value_AppendLineChar)
+{
+    strcat(_out_Message, value_AppendLineChar);
+    strcat(_out_Message, _out_LineFeed);
+    return(void);
+}
+
+defineFunction(Out_AppendCharArray, void, char[]:value_AppendCharArray)
+{
+    strcat(_out_Message, value_AppendCharArray);
+    return(void);
+}
+
+defineFunction(Out_AppendLineCharArray, void, char[]:value_AppendLineCharArray)
+{
+    strcat(_out_Message, value_AppendLineCharArray);
+    strcat(_out_Message, _out_LineFeed);
+    return(void);
+}
+
+defineFunction(Out_AppendStr, void, string:value_AppendStr)
+{
+    strcat(_out_Message, value_AppendStr);
+    return(void);
+}
+
+defineFunction(Out_AppendLineStr, void, string:value_AppendLineStr)
+{
+    strcat(_out_Message, value_AppendLineStr);
+    strcat(_out_Message, _out_LineFeed);
+    return(void);
+}
+
+defineFunction(Out_AppendVec3, void, vec3:value_AppendVec3)
+{
+    _out_fTmp = value_AppendVec3.x;
+    strcat(_out_Message, _out_fTmp);
+    strcat(_out_Message, ", ");
+    _out_fTmp = value_AppendVec3.y;
+    strcat(_out_Message, _out_fTmp);
+    strcat(_out_Message, ", ");
+    _out_fTmp = value_AppendVec3.z;
+    strcat(_out_Message, _out_fTmp);
+
+    return(void);
+}
+
+defineFunction(Out_AppendLineVec3, void, vec3:value_AppendLineVec3)
+{
+    Out_AppendVec3(value_AppendLineVec3);
+    strcat(_out_Message, _out_LineFeed);
+
+    return(void);
+}
+
+defineFunction(out_Wait, void)
+{
+    _out_MsgExists = 1;
+    while (_out_MsgExists ? 1)
+    {
+        Scenario_WindowExists(_out_MsgExists);
+    }    
+
+    Out_Clear();
+    return(void);
+}
+
+defineFunction(Out_ShowAndWait, void)
+{
+    Scenario_WindowWithImageLeft("Storage Observer", _out_Message, "Img/Info.png", 2);
+    out_Wait();
+    return(void);    
+}
+
+defineFunction(Out_ShowSuccessAndWait, void)
+{
+    Scenario_WindowWithImageLeft("Storage Observer", _out_Message, "Img/Success.png", 2);
+    out_Wait();
+    return(void);    
+}
+
+defineFunction(Out_ShowErrorAndWait, void)
+{
+    Scenario_WindowWithImageLeft("Storage Observer", _out_Message, "Img/Error.png", 2);
+    out_Wait();
+    return(void);    
+}
+
+defineFunction(Out_ShowAndWaitImage, void, string:imgPath_ShowAndWaitImage)
+{
+    Scenario_WindowWithImageLeft("Storage Observer", _out_Message, imgPath_ShowAndWaitImage, 2);
+    out_Wait();
+    return(void);   
+}
+
+defineFunction(Out_Show, void)
+{    
+    Scenario_WindowWithImageLeft("Storage Observer", _out_Message, "Img/Info.png", 2);
+    Out_Clear();
+    return(void);
+}

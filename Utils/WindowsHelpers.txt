@@ -1,0 +1,33 @@
+/////////////////////////
+// GET TOP MOST WINDOW //
+/////////////////////////
+
+defineVariable(Window, _result_GetTopMostWindow);
+defineVariable(int, _windowCount_GetTopMostWindow);
+defineVariable(int, _iter_GetTopMostWindow);
+
+defineFunction(GetTopMostWindow, Window, int:windowType_GetTopMostWindow)
+{
+    Window_GetNumberOfWindows(_windowCount_GetTopMostWindow);    
+    if (windowType_GetTopMostWindow ? -1)
+    {
+        _result_GetTopMostWindow.GetDataByIndex(_windowCount_GetTopMostWindow - 1);
+        return(_result_GetTopMostWindow);            
+    }
+
+    _iter_GetTopMostWindow = 0;
+    while (_iter_GetTopMostWindow < _windowCount_GetTopMostWindow)
+    {
+        _result_GetTopMostWindow.GetDataByIndex(_iter_GetTopMostWindow);
+        if (_result_GetTopMostWindow.nErrorType ? WINDOW_ERROR_NONE &
+            _result_GetTopMostWindow.nReferenceObjectType ? windowType_GetTopMostWindow)
+        {
+            return(_result_GetTopMostWindow);
+        }
+
+        inc(_iter_GetTopMostWindow);
+    }
+
+    _result_GetTopMostWindow.GetDataByIndex(-1);
+    return(_result_GetTopMostWindow);
+}

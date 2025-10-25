@@ -1,0 +1,439 @@
+include("SOVIETInstructions.txt");
+include("Out.txt");
+include("../3590208830/Commands.txt");
+include("Utils/Math.txt");
+include("Utils/BuildingsHelpers.txt");
+include("Utils/WindowsHelpers.txt");
+include("Controls/Commands.txt");
+include("Controls/Input.txt");
+include("Resources.txt");
+include("Observer.txt");
+
+////////////////////////
+// ADD OBSERVER SETUP //
+////////////////////////
+
+defineVariable(int, _setupActive_AddObserver);
+defineVariable(int, _setupStep_AddObserver);
+defineVariable(int, _resourceId_AddObserver);
+defineVariable(int, _comparisonMode_AddObserver);
+defineVariable(int, _targetLevelInputMinStep_AddObserver);
+defineVariable(int, _targetLevelInputMaxStep_AddObserver);
+defineVariable(float, _targetLevel_AddObserver);
+
+defineVariable(Window, _targetWindow_AddObserver);
+defineVariable(Building, _targetBuilding_AddObserver);
+defineVariable(Observer, _observer_AddObserver);
+
+defineFunction(StopAddObserverSetup, void)
+{
+    Input_End();
+
+    Objective_Remove("addobserversetup.selectbuilding");
+    Objective_Remove("addobserversetup.resourceid");
+    Objective_Remove("addobserversetup.comparisonmode");
+
+    _setupStep_AddObserver = 0;
+    _setupActive_AddObserver = 0;
+    
+    return(void);
+}
+
+defineFunction(DoAddObserverSetup, void)
+{
+    // Select building step init
+    if (_setupStep_AddObserver ? 0)
+    {
+        Objectives_CreateNewString("addobserversetup.selectbuilding", "Select the building you want to monitor");
+        inc(_setupStep_AddObserver);
+    }
+    // Select building step
+    elseif (_setupStep_AddObserver ? 1)
+    {
+        _targetWindow_AddObserver = GetTopMostWindow(SOVIET_OBJECT_BUILDING);
+        if (CommandScripts_PollAccept() ? 1)
+        {
+            if (_targetWindow_AddObserver.nValidRead ? 1)
+            {
+                _targetBuilding_AddObserver.GetDataByIndex(_targetWindow_AddObserver.nRefObjectIndex);
+                if (_targetBuilding_AddObserver.nValidRead ? 1)
+                {
+                    Objective_Remove("addobserversetup.selectbuilding");
+                    inc(_setupStep_AddObserver);
+                }
+            }
+            else() 
+            {
+                Out_AppendStr("Please select a building.");
+                Out_ShowErrorAndWait();
+            } 
+        }
+    }
+
+    // Select resource step init
+    elseif (_setupStep_AddObserver ? 2)
+    {
+        Input_Begin("Select the resource you want to monitor [Q/E]:", 0, 0, 49);   
+        Input_HideValue();
+        Objectives_CreateNewString("addobserversetup.resourceid", GetResourceName(Input_GetCurrentValue()));
+
+        inc(_setupStep_AddObserver);
+    }
+    // Select resource step
+    elseif (_setupStep_AddObserver ? 3)
+    {
+        Input_Update();
+        if (Input_HasChanged() ? 1)
+        {
+            Objective_Remove("addobserversetup.resourceid");
+            Objectives_CreateNewString("addobserversetup.resourceid", GetResourceName(Input_GetCurrentValue()));
+        }
+        
+        if (CommandScripts_PollAccept() ? 1)
+        {
+            if (GetResourceCapacity(Input_GetCurrentValue(), _targetWindow_AddObserver.nRefObjectIndex) > 0.0)
+            {
+                Objective_Remove("addobserversetup.resourceid");
+                _resourceId_AddObserver = Input_End();
+                inc(_setupStep_AddObserver);
+            }
+            else()
+            {
+                Out_AppendStr("This building cannot store: ");
+                Out_AppendStr(GetResourceName(Input_GetCurrentValue()));
+                Out_ShowErrorAndWait();
+            }
+        }
+    }
+
+    // Select mode init
+    elseif (_setupStep_AddObserver ? 4)
+    {
+        Input_Begin("Notify when [Q/E]:", 0, 0, 1);
+        Input_HideValue();
+        Objectives_CreateNewString("addobserversetup.comparisonmode", "Less"); 
+
+        inc(_setupStep_AddObserver);
+    }
+    // Select mode
+    elseif (_setupStep_AddObserver ? 5)
+    {
+        Input_Update();
+        if (Input_HasChanged() ? 1)
+        {
+            Objective_Remove("addobserversetup.comparisonmode"); 
+
+            if (Input_GetCurrentValue() ? 0) { 
+                Objectives_CreateNewString("addobserversetup.comparisonmode", "Less"); 
+            }
+            if (Input_GetCurrentValue() ? 1) { 
+                Objectives_CreateNewString("addobserversetup.comparisonmode", "More"); 
+            }
+        }
+
+        if (CommandScripts_PollAccept() ? 1)
+        {
+            Objective_Remove("addobserversetup.comparisonmode");
+            _comparisonMode_AddObserver = Input_End();
+            inc(_setupStep_AddObserver);
+        }
+    }
+
+    // Target level input init
+    elseif (_setupStep_AddObserver ? 6)
+    {
+        Input_Begin(
+            "Target resource level in tonnes [Q/E] (Shift ±1%)", 
+            GetResourceCapacity(_resourceId_AddObserver, _targetWindow_AddObserver.nRefObjectIndex) * 0.5, 
+            0, 
+            GetResourceCapacity(_resourceId_AddObserver, _targetWindow_AddObserver.nRefObjectIndex));
+
+        _targetLevelInputMinStep_AddObserver = GetResourceCapacity(_resourceId_AddObserver, _targetWindow_AddObserver.nRefObjectIndex) * 0.01;
+        if (_targetLevelInputMinStep_AddObserver < 1.0)
+        {
+            _targetLevelInputMinStep_AddObserver = 1.0;
+        }
+        _targetLevelInputMaxStep_AddObserver = GetResourceCapacity(_resourceId_AddObserver, _targetWindow_AddObserver.nRefObjectIndex) * 0.10;
+        if (_targetLevelInputMaxStep_AddObserver < 1.0)
+        {
+            _targetLevelInputMaxStep_AddObserver = 1.0;
+        }
+        Input_SetStep(_targetLevelInputMinStep_AddObserver, _targetLevelInputMaxStep_AddObserver);
+
+        inc(_setupStep_AddObserver);
+    }
+    // Target level input
+    elseif (_setupStep_AddObserver ? 7)
+    {
+        Input_Update();
+
+        if (CommandScripts_PollAccept() ? 1)
+        {
+            _targetLevel_AddObserver = Input_End();
+            inc(_setupStep_AddObserver);
+        }
+    }
+
+    // Finish setup
+    else()
+    {
+        _observer_AddObserver.TargetBuildingId = _targetWindow_AddObserver.nRefObjectIndex;
+        _observer_AddObserver.TargetPosition = _targetBuilding_AddObserver.vPosition;
+        _observer_AddObserver.ComparisonMode = _comparisonMode_AddObserver;
+        _observer_AddObserver.ResourceId = _resourceId_AddObserver;
+        _observer_AddObserver.TargetLevel = _targetLevel_AddObserver;
+        AddObserver(_observer_AddObserver);
+
+        Out_AppendStr("Successfully added storage observer.");
+        Out_ShowSuccessAndWait();
+
+        StopAddObserverSetup();
+    }
+
+    return(void);
+}
+
+///////////////////////////
+// REMOVE OBSERVER SETUP //
+///////////////////////////
+
+defineVariable(int, _setupActive_RemoveObserver);
+defineVariable(int, _setupStep_RemoveObserver);
+defineVariable(int, _observerId_RemoveObserver);
+defineVariable(Window, _targetWindow_RemoveObserver);
+defineVariable(Building, _targetBuilding_RemoveObserver);
+
+defineFunction(StopRemoveObserverSetup, void)
+{
+    Input_End();
+
+    Objective_Remove("removeobserversetup.selectbuilding");
+
+    _setupStep_RemoveObserver = 0;
+    _setupActive_RemoveObserver = 0;
+    
+    return(void);
+}
+
+defineFunction(DoRemoveObserverSetup, void)
+{
+    // Select building step init
+    if (_setupStep_RemoveObserver ? 0)
+    {
+        Objectives_CreateNewString("removeobserversetup.selectbuilding", "Select the building you want to stop monitoring.");
+        inc(_setupStep_RemoveObserver);
+    }
+    // Select building step
+    elseif (_setupStep_RemoveObserver ? 1)
+    {
+        _targetWindow_RemoveObserver = GetTopMostWindow(SOVIET_OBJECT_BUILDING);
+        if (CommandScripts_PollAccept() ? 1)
+        {
+            if (_targetWindow_RemoveObserver.nValidRead ? 1)
+            {
+                _targetBuilding_RemoveObserver.GetDataByIndex(_targetWindow_RemoveObserver.nRefObjectIndex);
+                if (_targetBuilding_RemoveObserver.nValidRead ? 1)
+                {
+                    Objective_Remove("removeobserversetup.selectbuilding");
+                    inc(_setupStep_RemoveObserver);
+                }
+            }
+            else() 
+            {
+                Out_AppendStr("Please select a building.");
+                Out_ShowErrorAndWait();
+            } 
+        }
+    }
+
+    // Finish setup
+    else()
+    {
+        while (!(GetObserverId(_targetBuilding_RemoveObserver.vPosition, 0) ? -1))
+        {
+            RemoveObserver(GetObserverId(_targetBuilding_RemoveObserver.vPosition, 0));
+        }
+        
+        Out_AppendStr("Successfully removed storage observers.");
+        Out_ShowSuccessAndWait();
+
+        StopRemoveObserverSetup();
+    }
+
+    return(void);
+}
+
+/////////////////////////////
+// INSPECT OBSERVERS SETUP //
+/////////////////////////////
+
+defineVariable(int, _setupActive_InspectObservers);
+defineVariable(int, _setupStep_InspectObservers);
+defineVariable(int, _iter_InspectObservers);
+defineVariable(Window, _targetWindow_InspectObservers);
+defineVariable(Building, _targetBuilding_InspectObservers);
+defineVariable(Observer, _observer_InspectObservers);
+
+defineFunction(StopInspectObserversSetup, void)
+{
+    Input_End();
+
+    Objective_Remove("inspectobserverssetup.selectbuilding");
+
+    _setupStep_InspectObservers = 0;
+    _setupActive_InspectObservers = 0;
+    
+    return(void);
+}
+
+defineFunction(DoInspectObserversSetup, void)
+{
+    // Select building step init
+    if (_setupStep_InspectObservers ? 0)
+    {
+        Objectives_CreateNewString("inspectobserverssetup.selectbuilding", "Select the building you want to inspect.");
+        inc(_setupStep_InspectObservers);
+    }
+    // Select building step
+    elseif (_setupStep_InspectObservers ? 1)
+    {
+        _targetWindow_InspectObservers = GetTopMostWindow(SOVIET_OBJECT_BUILDING);
+        if (CommandScripts_PollAccept() ? 1)
+        {
+            if (_targetWindow_InspectObservers.nValidRead ? 1)
+            {
+                _targetBuilding_InspectObservers.GetDataByIndex(_targetWindow_InspectObservers.nRefObjectIndex);
+                if (_targetBuilding_InspectObservers.nValidRead ? 1)
+                {
+                    Objective_Remove("inspectobserverssetup.selectbuilding");
+                    inc(_setupStep_InspectObservers);
+                }
+            }
+            else() 
+            {
+                Out_AppendStr("Please select a building.");
+                Out_ShowErrorAndWait();
+            } 
+        }
+    }
+
+    // Finish setup
+    else()
+    {
+        Out_AppendLineStr("Current observers:");
+
+        _iter_InspectObservers = GetObserverId(_targetBuilding_InspectObservers.vPosition, 0);
+        while (!(_iter_InspectObservers ? -1))
+        {
+            _observer_InspectObservers = Observers[_iter_InspectObservers];
+            Out_AppendStr("- ");
+            Out_AppendStr(GetResourceName(_observer_InspectObservers.ResourceId));
+            Out_AppendStr(": notify when ");
+
+            if (_observer_InspectObservers.ComparisonMode ? 0)
+            {
+                Out_AppendStr("less than ");
+            }
+            else()
+            {
+                Out_AppendStr("more than ");
+            }
+
+            Out_AppendFloat(_observer_InspectObservers.TargetLevel);
+            Out_AppendLineStr(" tons.");
+
+            _iter_InspectObservers = GetObserverId(_targetBuilding_InspectObservers.vPosition, _iter_InspectObservers + 1);
+        }
+
+        Out_Show();
+        StopInspectObserversSetup();
+    }
+
+    return(void);
+}
+
+/////////////////////
+// STOP ALL SETUPS //
+/////////////////////
+
+defineFunction(StopAllSetups, void)
+{
+    StopAddObserverSetup();
+    StopRemoveObserverSetup();
+    StopInspectObserversSetup();
+    return(void);
+}
+
+//////////
+// MAIN //
+//////////
+
+defineVariable(char, _scenarioActive_Main);
+defineVariable(int, _currBuildingsNum_Main);
+defineVariable(int, _prevBuildingsNum_Main);
+
+defineFunction(main, void) 
+{
+    InitConstants();
+    Out_Init();
+
+    ActiveScenario_Exists(_scenarioActive_Main);
+    if (_scenarioActive_Main ? 1)
+    {
+        Out_AppendStr("Campaign mode is unsupported.");
+        Out_ShowErrorAndWait();
+        end();
+    }
+    
+    while (1 ? 1)
+    {
+        if (CommandScripts_PollCancel() ? 1)
+        {
+            StopAllSetups();
+        }
+
+        if (_setupActive_AddObserver ? 1)
+        {
+            DoAddObserverSetup();
+        }
+        elseif (PollAddObserver() ? 1)
+        {
+            StopAllSetups();
+            _setupStep_AddObserver = 0;
+            _setupActive_AddObserver = 1;
+        }
+
+        if (_setupActive_RemoveObserver ? 1)
+        {
+            DoRemoveObserverSetup();
+        }
+        elseif (PollRemoveObserver() ? 1)
+        {
+            StopAllSetups();
+            _setupStep_RemoveObserver = 0;
+            _setupActive_RemoveObserver = 1;
+        }
+
+        if (_setupActive_InspectObservers ? 1)
+        {
+            DoInspectObserversSetup();
+        }
+        elseif (PollInspectObservers() ? 1)
+        {
+            StopAllSetups();
+            _setupStep_InspectObservers = 0;
+            _setupActive_InspectObservers = 1;
+        }
+
+        Building_GetNumberOfBuildings(_currBuildingsNum_Main);
+        if (_currBuildingsNum_Main < _prevBuildingsNum_Main)
+        {
+            UpdateObserversBuildingId();
+        }
+        _prevBuildingsNum_Main = _currBuildingsNum_Main;
+
+        UpdateObservers();
+    }
+
+    end();
+}

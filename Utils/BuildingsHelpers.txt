@@ -1,0 +1,26 @@
+///////////////////////////////
+// FIND BUILDING BY POSITION //
+///////////////////////////////
+
+defineVariable(Building, _building_FindBuildingIdByPosition);
+defineVariable(int, _iter_FindBuildingIdByPosition);
+
+defineFunction(FindBuildingIdByPosition, int, vec3:position_FindBuildingIdByPosition)
+{
+    Building_GetNumberOfBuildings(_iter_FindBuildingIdByPosition);
+    while (_iter_FindBuildingIdByPosition > 0)
+    {
+        dec(_iter_FindBuildingIdByPosition);
+
+        _building_FindBuildingIdByPosition.GetDataByIndex(_iter_FindBuildingIdByPosition);
+        if (_building_FindBuildingIdByPosition.nValidRead ? 1 &
+            _building_FindBuildingIdByPosition.vPosition.x ? position_FindBuildingIdByPosition.x &
+            _building_FindBuildingIdByPosition.vPosition.y ? position_FindBuildingIdByPosition.y &
+            _building_FindBuildingIdByPosition.vPosition.z ? position_FindBuildingIdByPosition.z)
+        {
+            return(_iter_FindBuildingIdByPosition);
+        }
+    }
+
+    return(-1);
+}

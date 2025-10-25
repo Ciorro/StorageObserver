@@ -1,0 +1,15 @@
+include("SOVIETInstructions.txt");
+
+defineVariable(char, IsServiceRunning);
+
+defineFunction(main, void)
+{
+    Script_Exists("StorageObserver_Service.txt", IsServiceRunning);
+    if (IsServiceRunning ? 0)
+    {
+        Script_StartNew("StorageObserver_Service.txt");
+    }
+
+    Script_Sleep(0.25);
+    end();
+}

@@ -1,0 +1,59 @@
+///////////////////////
+// POLL ADD OBSERVER //
+///////////////////////
+
+defineVariable(char, _addObserverExists_PollAddObserver);
+
+defineFunction(PollAddObserver, char)
+{
+    _addObserverExists_PollAddObserver = 0;
+    Script_Exists("StorageObserver_Add.txt", _addObserverExists_PollAddObserver);
+
+    if (_addObserverExists_PollAddObserver ? 1)
+    {
+        Script_DestroyByName("StorageObserver_Add.txt");
+        return(1);
+    }
+
+    return(0);
+}
+
+//////////////////////////
+// POLL REMOVE OBSERVER //
+//////////////////////////
+
+defineVariable(char, _removeObserverExists_PollRemoveObserver);
+
+defineFunction(PollRemoveObserver, char)
+{
+    _removeObserverExists_PollRemoveObserver = 0;
+    Script_Exists("StorageObserver_Remove.txt", _removeObserverExists_PollRemoveObserver);
+
+    if (_removeObserverExists_PollRemoveObserver ? 1)
+    {
+        Script_DestroyByName("StorageObserver_Remove.txt");
+        return(1);
+    }
+
+    return(0);
+}
+
+//////////////////
+// POLL INSPECT //
+//////////////////
+
+defineVariable(char, _inspectObserversExists_PollInspectObservers);
+
+defineFunction(PollInspectObservers, char)
+{
+    _inspectObserversExists_PollInspectObservers = 0;
+    Script_Exists("StorageObserver_Inspect.txt", _inspectObserversExists_PollInspectObservers);
+
+    if (_inspectObserversExists_PollInspectObservers ? 1)
+    {
+        Script_DestroyByName("StorageObserver_Inspect.txt");
+        return(1);
+    }
+
+    return(0);
+}

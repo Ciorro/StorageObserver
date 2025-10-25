@@ -1,0 +1,112 @@
+defineVariable(char, _valueUpdated_Input);
+defineVariable(float, _currentValue_Input);
+defineVariable(float, _minValue_Input);
+defineVariable(float, _maxValue_Input);
+defineVariable(float, _step_Input);
+defineVariable(float, _smallStep_Input);
+defineVariable(float, _largeStep_Input);
+
+defineVariable(int, _prevQPressed_Input);
+defineVariable(int, _currQPressed_Input);
+defineVariable(int, _prevEPressed_Input);
+defineVariable(int, _currEPressed_Input);
+defineVariable(int, _isPrecise_Input);
+
+defineFunction(Input_Begin, void, 
+    string:label_Input, float:defaultValue_Input, float:minValue_Input, float:maxValue_Input)
+{
+    Objectives_CreateNewString("input.value", label_Input);
+    Objective_AddRequirement("input.value", 0.0, "");
+    Objective_UpdateRequirement("input.value", 0, defaultValue_Input);
+
+    _currentValue_Input = defaultValue_Input;
+    _minValue_Input = minValue_Input;
+    _maxValue_Input = maxValue_Input;
+    _smallStep_Input = 1.0;
+    _largeStep_Input = 1.0;
+
+    _prevQPressed_Input = 0;
+    _currQPressed_Input = 0;
+    _prevEPressed_Input = 0;
+    _currEPressed_Input = 0;
+
+    return(void);
+}
+
+defineFunction(Input_HideValue, void)
+{
+    Objective_UpdateRequiredValue("input.value", 0, 0.001);
+    return(void);
+}
+
+defineFunction(Input_SetStep, void, float:smallStep_Input, float:largeStep_Input)
+{
+    _smallStep_Input = smallStep_Input;
+    _largeStep_Input = largeStep_Input;
+    return(void);
+}
+
+defineFunction(Input_Update, void)
+{
+    Scenario_GetUserInput("BUILDING_UP", _currEPressed_Input);
+    Scenario_GetUserInput("BUILDING_DOWN", _currQPressed_Input);
+    Scenario_GetUserInput("TOGGLE_ZOOM_ROTATE", _isPrecise_Input);
+
+    if (_isPrecise_Input ? 1) 
+    {
+        _step_Input = _smallStep_Input;
+    }
+    else () 
+    {
+        _step_Input = _largeStep_Input;
+    }
+
+    if (_currEPressed_Input ? 1 & _prevEPressed_Input ? 0)
+    {
+        _currentValue_Input = _currentValue_Input + _step_Input;
+        if (_currentValue_Input > _maxValue_Input)
+        {
+            _currentValue_Input = _minValue_Input;
+        }
+
+        Objective_UpdateRequirement("input.value", 0, _currentValue_Input);
+        _valueUpdated_Input = 1;
+    }
+    if (_currQPressed_Input ? 1 & _prevQPressed_Input ? 0)
+    {
+        _currentValue_Input = _currentValue_Input - _step_Input;
+        if (_currentValue_Input < _minValue_Input)
+        {
+            _currentValue_Input = _maxValue_Input;
+        }
+        
+        Objective_UpdateRequirement("input.value", 0, _currentValue_Input);
+        _valueUpdated_Input = 1;
+    }
+
+    _prevEPressed_Input = _currEPressed_Input;
+    _prevQPressed_Input = _currQPressed_Input;
+    return(void);
+}
+
+defineFunction(Input_HasChanged, char)
+{
+    if (_valueUpdated_Input ? 1)
+    {
+        _valueUpdated_Input = 0;
+        return(1);
+    }
+
+    return(0);
+}
+
+defineFunction(Input_GetCurrentValue, float)
+{
+    return(_currentValue_Input);
+}
+
+defineFunction(Input_End, float)
+{
+    Objective_Remove("input.value");
+    return(_currentValue_Input);
+}
